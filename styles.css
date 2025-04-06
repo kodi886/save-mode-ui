@@ -1,0 +1,532 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #201f1f;
+    color: #ffffff;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    max-width: 100%;
+}
+
+/* Panel Styles */
+.chat-panel, .form-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 97%;
+    overflow: hidden;
+    background-color: #2d2c2c;
+    border-radius: 8px;
+    margin: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.panel-header {
+    padding: 15px;
+    background-color: #464775;
+    color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Toggle Button Groups */
+.view-toggle, .toggle-buttons {
+    display: flex;
+}
+
+.view-toggle button {
+    background-color: transparent;
+    border: none;
+    color: #ebebeb;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-left: 5px;
+    transition: background-color 0.2s;
+}
+
+.view-toggle button.active {
+    background-color: #6264a7;
+    color: white;
+}
+
+/* Chat View */
+.chat-view, .params-view {
+    display: none;
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.chat-view.active, .params-view.active {
+    display: block;
+}
+
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    /*max-height: calc(100vh - 200px); /* Adjusted based on typical layout */
+}
+
+/* Chat Interface */
+.chat-interface {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Chat Input Area */
+.chat-input-area {
+    display: flex;
+    align-items: flex-end;
+    padding: 15px;
+    background-color: #201f1f;
+    border-top: 1px solid #4a4a4a;
+    min-height: 90px;
+}
+
+.chat-input-area textarea {
+    flex: 1;
+    min-height: 40px;
+    max-height: 140px;
+    padding: 10px;
+    border: 1px solid #4a4a4a; 
+    border-radius: 4px; 
+    resize: none; 
+    overflow-y: hidden;
+    background-color: #3b3a39;
+    color: #e8e6e5;
+    font-size: 14px;
+}
+
+.chat-input-area button {
+    width: 60px;
+    height: 40px;
+    margin: 0 0 0 10px;
+    background-color: #6264a7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-param-btn {
+    margin: 15px;
+    padding: 8px 15px;
+    background-color: #6264a7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.chat-input-area button:hover {
+    background-color: #7b7dd1;
+}
+
+/* Message Styles */
+.message {
+    margin-bottom: 15px;
+    max-width: 85%;
+    word-wrap: break-word;
+}
+
+.message.user {
+    align-self: flex-end;
+    background-color: #464775;
+    color: white;
+    border-radius: 18px 18px 0 18px;
+    padding: 10px 15px;
+}
+
+.message.bot {
+    align-self: flex-start;
+    background-color: #2d2c2c;
+    color: white;
+    border: 1px solid #464775;
+    border-radius: 18px 18px 18px 0;
+    padding: 10px 15px;
+}
+
+/* Message Components */
+.message-header {
+    font-size: 13px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #c8c6c4;
+}
+
+.message-content {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Trace List */
+.trace-list {
+    background-color: #3b3a39;
+    border: 1px solid #4a4a4a;
+    border-radius: 4px;
+    padding: 10px;
+    height: 300px; /* Changed from max-height */
+    overflow-y: auto;
+    color: #e8e6e5;
+}
+
+.trace-item { /* Removed .file-item */
+    padding: 8px;
+    border-bottom: 1px solid #4a4a4a;
+    font-size: 14px;
+}
+
+/* Note: Logically, .file-item should likely be removed here too, but following diff strictly */
+.trace-item:last-child, .file-item:last-child {
+    border-bottom: none;
+}
+
+/* Form Panel */
+.form-section {
+    margin: 15px;
+    border: 1px solid #4a4a4a;
+    height: 50%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.section-header {
+    background-color: #3b3a39;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #4a4a4a;
+}
+
+.section-header h3 {
+    font-size: 16px;
+    color: #c8c6c4;
+}
+
+/* Toggle Buttons for Prompt - Handled by .toggle-buttons group */
+/* .toggle-buttons defined earlier */
+.toggle-buttons button {
+    background-color: transparent;
+    border: none;
+    color: #c8c6c4;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-left: 5px;
+    transition: background-color 0.2s;
+}
+
+.toggle-buttons button.active {
+    background-color: #6264a7;
+    color: white;
+}
+
+/* Prompt Sections */
+.prompt-section {
+    display: none;
+    padding: 0;
+}
+
+.prompt-section.active {
+    display: block;
+}
+
+.prompt-section textarea {
+    width: 100%;
+    height: 250px;
+    padding: 15px;
+    border: none;
+    resize: vertical;
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: 'Consolas', monospace;
+    background-color: #201f1f; /* Keep background */
+    color: #e8e6e5;
+}
+
+/* Info Views (Code, Trace, Background) */
+.info-view {
+    display: none; /* Hidden by default */
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.info-view.active {
+    display: block; /* Shown when active */
+}
+
+/* Code View */
+#codeView { /* Changed from .code-section */
+    padding: 0;
+    background-color: #1e1e1e;
+    /* max-height and overflow-y moved to .info-view */
+}
+
+#codeView pre { /* Changed from .code-section pre */
+    margin: 0;
+}
+
+#codeView code { /* Changed from .code-section code */
+    padding: 15px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 0;
+    background-color: #1e1e1e !important;
+}
+
+/* Background Info */
+.bg-info-list {
+    list-style-type: none;
+    padding: 15px;
+    background-color: #3b3a39; /* Matching trace list */
+}
+
+.bg-info-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #4a4a4a;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bg-info-list li:last-child {
+    border-bottom: none;
+}
+
+/* Add Parameter Form */
+.add-param-form {
+    padding: 15px;
+    background-color: #2d2c2c; /* Panel background */
+    border-top: 1px solid #4a4a4a;
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.add-param-form input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #4a4a4a;
+    border-radius: 4px;
+    background-color: #3b3a39;
+    color: #e8e6e5;
+}
+
+.add-param-form button {
+    padding: 8px 12px;
+    background-color: #6264a7; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-param-form button:last-child {
+    background-color: #3b3a39; /* Secondary/Cancel button color */
+}
+
+/* Delete Parameter Button Styling */
+.delete-param {
+    background-color: transparent;
+    border: none;
+    color: #c8c6c4;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.delete-param:hover {
+    background-color: #464775;
+    color: white;
+}
+
+.delete-param i {
+    font-size: 12px;
+}
+
+/* Save Button */
+.save-section {
+    margin: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.save-btn {
+    background-color: #6264a7;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.save-btn:hover {
+    background-color: #7b7dd1;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    position: relative;
+    background-color: #2d2c2c;
+    margin: 10% auto;
+    padding: 0;
+    border-radius: 8px;
+    width: 60%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s;
+}
+
+@keyframes modalFadeIn {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.modal-header {
+    padding: 15px;
+    background-color: #464775;
+    color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.close {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 15px;
+}
+
+.cmd-window {
+    background-color: #000;
+    color: #00ff00;
+    font-family: 'Consolas', monospace;
+    padding: 15px;
+    border-radius: 4px;
+    height: 200px;
+    overflow-y: auto;
+}
+
+#cmdOutput {
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.cmd-loading {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.loader {
+    border: 3px solid #333;
+    border-top: 3px solid #00ff00;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .chat-panel, .form-panel {
+        margin: 5px;
+        flex: none;
+        min-height: 50vh; /* Adjust height for smaller screens */
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+
+    .chat-messages {
+       /* Adjust max-height for column layout if needed */
+       max-height: calc(50vh - 160px); /* Example adjustment */
+    }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #3b3a39;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #6264a7;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #7b7dd1;
+}

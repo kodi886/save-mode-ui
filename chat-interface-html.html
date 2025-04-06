@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams Style Chat Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="chat-panel">
+            <div class="panel-header">
+                <h2>聊天室</h2>
+            </div>
+
+            <div class="chat-interface">
+                <div class="chat-messages" id="chatMessages">
+                    </div>
+
+                <div class="chat-input-area">
+                    <textarea id="userInput" placeholder="請輸入訊息..." rows="1"></textarea>
+                    <button id="sendMessageBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-panel">
+            <div class="panel-header">
+                <h2>儲存對話</h2>
+            </div>
+
+            <div class="form-section">
+                <div class="section-header">
+                    <h3>使用者 Prompt</h3>
+                    <div class="toggle-buttons">
+                        <button id="rawPromptBtn" class="active">Raw Prompt</button>
+                        <button id="fineTunePromptBtn">Fine Tune Prompt</button>
+                    </div>
+                </div>
+
+                <div id="rawPromptSection" class="prompt-section active">
+                    <textarea id="rawPrompt" placeholder="在此輸入使用者問題的描述..."></textarea>
+                </div>
+
+                <div id="fineTunePromptSection" class="prompt-section">
+                    <textarea id="fineTunePrompt" placeholder="在此輸入現場環境或情境的描述..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-header">
+                    <h3>資訊顯示</h3>
+                    <div class="view-toggle">
+                        <button id="codeViewBtn" class="active">Python Code</button>
+                        <button id="traceViewBtn">Trace List</button>
+                        <button id="bgInfoViewBtn">Background Info</button>
+                    </div>
+                </div>
+
+                <div id="codeView" class="info-view active">
+                    <pre><code class="language-python" id="pythonCode"></code></pre>
+                </div>
+
+                <div id="traceView" class="info-view">
+                    <div class="trace-list" id="traceList">
+                        </div>
+                </div>
+
+                <div id="bgInfoView" class="info-view">
+                    <ul id="backgroundInfo" class="bg-info-list">
+                        </ul>
+                    <button id="addParamBtn" class="add-param-btn"><i class="fas fa-plus"></i> 新增參數</button>
+                    <div class="add-param-form" id="addParamForm" style="display: none;">
+                        <input type="text" id="paramKey" placeholder="參數名稱...">
+                        <input type="text" id="paramValue" placeholder="參數值...">
+                        <button id="confirmAddParam">新增</button>
+                        <button id="cancelAddParam">取消</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="save-section">
+                <button id="saveButton" class="save-btn">儲存到資料庫</button>
+            </div>
+
+            <div id="cmdModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h2>處理中...</h2>
+                    </div>
+                    <div class="modal-body">
+                        <div class="cmd-window">
+                            <div id="cmdOutput"></div>
+                            <div class="cmd-loading">
+                                <div class="loader"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/python.min.js"></script>
+    <script src="script.js"></script>
+    <script src="backend.js"></script>
+</body>
+</html>
