@@ -103,13 +103,27 @@ if __name__ == "__main__":
             headerDiv.className = 'message-header';
             headerDiv.textContent = msg.sender === 'user' ? '使用者' : 'AI 助手';
 
+            if (msg.sender === 'user') {
+                const editBtn = document.createElement('button');
+                editBtn.className = 'edit-message-btn';
+                editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+                editBtn.title = '編輯訊息';
+                editBtn.addEventListener('click', function() {
+                    editMessage(messageDiv);
+                });
+                headerDiv.appendChild(editBtn);
+            }
+
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
             contentDiv.textContent = msg.content;
+            contentDiv.setAttribute('data-original-content', msg.content);
 
             messageDiv.appendChild(headerDiv);
             messageDiv.appendChild(contentDiv);
             chatMessages.appendChild(messageDiv);
+            const messageIndex = chatMessages.querySelectorAll('.message').length - 1;
+            messageDiv.setAttribute('data-message-index', messageIndex);
         });
 
         // Load trace list
@@ -282,16 +296,121 @@ if __name__ == "__main__":
         headerDiv.className = 'message-header';
         headerDiv.textContent = sender === 'user' ? '使用者' : 'AI 助手';
 
+        if (sender === 'user') {
+            const editBtn = document.createElement('button');
+            editBtn.className = 'edit-message-btn';
+            editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+            editBtn.title = '編輯訊息';
+            editBtn.addEventListener('click', function() {
+                editMessage(messageDiv);
+            });
+            headerDiv.appendChild(editBtn);
+        }
+
         const contentDiv = document.createElement('div');
         contentDiv.className = 'message-content';
         contentDiv.textContent = content;
+        contentDiv.setAttribute('data-original-content', content);
+
 
         messageDiv.appendChild(headerDiv);
         messageDiv.appendChild(contentDiv);
         chatMessages.appendChild(messageDiv);
+        const messageIndex = chatMessages.querySelectorAll('.message').length - 1;
+        messageDiv.setAttribute('data-message-index', messageIndex);
 
         // Scroll to bottom
         chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function editMessage(messageDiv) {
+        const contentDiv = messageDiv.querySelector('.message-content');
+        const originalContent = contentDiv.getAttribute('data-original-content');
+        const messageIndex = parseInt(messageDiv.getAttribute('data-message-index'));
+        
+        // 創建編輯區域
+        const editArea = document.createElement('div');
+        editArea.className = 'edit-message-area';
+        editArea.style.width = messageDiv.offsetWidth + 'px';
+        
+        const textarea = document.createElement('textarea');
+        textarea.className = 'edit-message-textarea';
+        textarea.value = originalContent;
+        
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'button-container';
+        
+        const saveBtn = document.createElement('button');
+        saveBtn.className = 'edit-message-save-btn';
+        saveBtn.textContent = '保存';
+        saveBtn.addEventListener('click', function() {
+            saveEditedMessage(messageDiv, textarea.value, messageIndex);
+        });
+        
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'edit-message-cancel-btn';
+        cancelBtn.textContent = '取消';
+        cancelBtn.addEventListener('click', function() {
+            // 恢復原始內容
+            contentDiv.textContent = originalContent;
+            messageDiv.removeChild(editArea);
+            messageDiv.querySelector('.message-content').style.display = 'block';
+        });
+        
+        buttonContainer.appendChild(saveBtn);
+        buttonContainer.appendChild(cancelBtn);
+        
+        editArea.appendChild(textarea);
+        editArea.appendChild(buttonContainer);
+        
+        // 隱藏原內容，顯示編輯區
+        contentDiv.style.display = 'none';
+        messageDiv.appendChild(editArea);
+        
+        // 自動聚焦並調整文本區高度
+        textarea.focus();
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight) + 'px';
+        
+        // 支持 Enter 鍵保存編輯
+        textarea.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                saveEditedMessage(messageDiv, textarea.value, messageIndex);
+            }
+        });
+    }
+
+    function saveEditedMessage(messageDiv, newContent, messageIndex) {
+        if (newContent.trim() === '') return;
+        
+        const contentDiv = messageDiv.querySelector('.message-content');
+        const chatMessages = document.getElementById('chatMessages');
+        
+        // 更新訊息內容
+        contentDiv.textContent = newContent;
+        contentDiv.setAttribute('data-original-content', newContent);
+        contentDiv.style.display = 'block';
+        
+        // 移除編輯區
+        const editArea = messageDiv.querySelector('.edit-message-area');
+        if (editArea) {
+            messageDiv.removeChild(editArea);
+        }
+        
+        // 刪除該訊息之後的所有訊息
+        const allMessages = chatMessages.querySelectorAll('.message');
+        allMessages.forEach(msg => {
+            const currentIndex = parseInt(msg.getAttribute('data-message-index'));
+            if (currentIndex > messageIndex) {
+                chatMessages.removeChild(msg);
+            }
+        });
+        
+        // 模擬 AI 對新訊息的回應
+        setTimeout(() => {
+            addChatMessage('bot', `針對您修改後的訊息「${newContent}」，我的回覆是...`);
+        }, 1000);
     }
 
     // Background Info Parameter Management (Added as per diff)
